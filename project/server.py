@@ -15,13 +15,14 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from datetime import datetime
 
-from agent import agent_loop
-from armorclaw import ArmorClaw
-from executor import execute
+from .agent import agent_loop
+from .armorclaw import ArmorClaw
+from .executor import execute
 
 app = FastAPI(title="ArmorClaw API", version="1.0.0")
 
 FRONTEND_DIR = Path(__file__).parent / "frontend"
+POLICY_FILE = Path(__file__).parent / "policies.yaml"
 
 # Allow the frontend dev server to connect.
 app.add_middleware(
@@ -33,7 +34,7 @@ app.add_middleware(
 )
 
 # Single ArmorClaw instance — keeps state (daily totals, counters) in memory.
-armor = ArmorClaw("policies.yaml")
+armor = ArmorClaw(str(POLICY_FILE))
 
 # In-memory action log for the dashboard.
 action_log: list[dict] = []
@@ -65,7 +66,11 @@ def process_command(req: CommandRequest):
     # 3. Execute if allowed.
     execution_result = None
     if allowed:
-        execution_result = execute(decision)
+        try:
+            execution_result = execute(decision)
+        except Exception as e:
+            # Avoid crashing the API for configuration/runtime issues (e.g. missing env vars).
+            execution_result = f"Execution failed: {e}"
 
     # 4. Build log entry.
     entry = {

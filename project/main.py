@@ -6,14 +6,17 @@ Flow:
 User -> Agent -> ArmorClaw -> Execute or Block
 """
 
-from agent import agent_loop
-from armorclaw import ArmorClaw
-from executor import execute
+from pathlib import Path
+
+from .agent import agent_loop
+from .armorclaw import ArmorClaw
+from .executor import execute
 
 
 def main():
     # Load policy engine.
-    armor = ArmorClaw("policies.yaml")
+    policy_file = Path(__file__).parent / "policies.yaml"
+    armor = ArmorClaw(str(policy_file))
 
     # Take user input.
     user_input = input("Enter command: ")
