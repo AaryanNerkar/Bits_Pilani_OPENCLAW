@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ArmorClaw | AI Intent Enforcement</title>
+<meta name="description" content="ArmorClaw watches every agent step, validates policy, and blocks unsafe execution before it reaches the market."/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  Live Demo: ArmorClaw blocking unauthorized trades in real-time
+  <a href="#chat-section" class="banner-link">Try it now →</a>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <nav class="nav-inner">
+    <div class="logo">armorclaw</div>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#dashboard" class="active">Dashboard</a>
+      <a href="#features">Enforcement</a>
+      <a href="#policies-section">Policies</a>
+      <a href="#chat-section">Agent Chat</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="resetAll()">Reset Demo</button>
+      <button class="btn-primary" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">Get started</button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO with 3D Scroll Animation -->
+<section class="hero-section" id="hero">
+  <div class="aurora-bg">
+    <div class="aurora-layer"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="material-symbols-outlined" style="font-size:14px">shield</span>
+      BITS Pilani × APOGEE26
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-word">Intent</span>
+      <span class="hero-word">enforcement</span>
+      <span class="hero-word">for</span>
+      <span class="hero-word hero-rotating-word" id="rotating-word">autonomous</span>
+      <span class="hero-word">financial</span>
+      <span class="hero-word">agents.</span>
+    </h1>
+    <p class="hero-sub">ArmorClaw watches every agent step, validates policy, and blocks unsafe execution before it reaches the market.</p>
+    <div class="hero-actions">
+      <button class="btn-primary btn-lg" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">
+        <span class="material-symbols-outlined" style="font-size:18px">smart_toy</span>
+        Talk to Agent
+      </button>
+      <button class="btn-ghost btn-lg" onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})">
+        View Dashboard
+        <span class="material-symbols-outlined" style="font-size:18px">arrow_downward</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3D Floating Card -->
+  <div class="scroll-3d-container" id="scroll3d">
+    <div class="scroll-3d-card" id="card3d">
+      <div class="card-chrome">
+        <div class="chrome-dots">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        </div>
+        <span class="chrome-title">armorclaw-console v2.4</span>
+      </div>
+      <div class="card-body">
+        <div class="card-goal">
+          <span class="material-symbols-outlined" style="color:#999">smart_toy</span>
+          <span class="goal-text">Agent Goal: Execute portfolio rebalance within risk limits...</span>
+        </div>
+        <div class="card-chips">
+          <span class="chip">Allowed Tickers: SPY, AAPL, MSFT</span>
+          <span class="chip">Max Trade Size: $500</span>
+          <span class="chip">Execution Mode: Enforced</span>
+        </div>
+        <table class="card-table">
+          <thead><tr><th>Timestamp</th><th>Action Intent</th><th>Policy</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr class="row-allowed"><td>10:24:02</td><td>Market Buy 10 AAPL</td><td><span class="badge-success">Verified</span></td><td class="status-allowed">ALLOWED</td></tr>
+            <tr class="row-blocked"><td>10:24:05</td><td>Market Buy 500 TSLA</td><td><span class="badge-error">Limit Exceeded</span></td><td class="status-blocked">BLOCKED</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-grid">
+    <div class="feature-card" data-reveal>
+      <div class="feature-icon"><span class="material-symbols-outlined">shield</span></div>
+      <h3>We enforce intent before execution</h3>
+      <p>Intercepts every API call, verifying governance before it hits the exchange.</p>
+    </div>
+    <div class="feature-card" data-reveal>
+      <div class="feature-icon"><span class="material-symbols-outlined">list_alt</span></div>
+      <h3>We log every decision with reason</h3>
+      <p>Auditable logs for every allow/block action with plain-English policy reasoning.</p>
+    </div>
+    <div class="feature-card" data-reveal>
+      <div class="feature-icon"><span class="material-symbols-outlined">lock</span></div>
+      <h3>We block scope escalation automatically</h3>
+      <p>Agents cannot self-modify limits. Logic is air-gapped from the LLM execution layer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DASHBOARD -->
+<section class="dashboard-section" id="dashboard">
+  <div class="section-header">
+    <h2>Live Enforcement Dashboard</h2>
+    <div class="section-line"></div>
+    <p class="section-sub">Real-time view of all agent actions processed through ArmorClaw</p>
+  </div>
+  <div class="stats-row" id="stats-row">
+    <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total Actions</div></div>
+    <div class="stat-card stat-success"><div class="stat-value" id="stat-allowed">0</div><div class="stat-label">Allowed</div></div>
+    <div class="stat-card stat-error"><div class="stat-value" id="stat-blocked">0</div><div class="stat-label">Blocked</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-rate">0%</div><div class="stat-label">Block Rate</div></div>
+  </div>
+  <div class="log-table-wrap" id="log-table-wrap">
+    <table class="log-table">
+      <thead><tr><th>Time</th><th>Command</th><th>Action</th><th>Symbol</th><th>Amount</th><th>Policy</th><th>Status</th><th>Reason</th></tr></thead>
+      <tbody id="log-tbody">
+        <tr class="empty-row"><td colspan="8">No actions yet. Use the chat below to send commands.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- POLICIES -->
+<section class="policies-section" id="policies-section">
+  <div class="section-header">
+    <h2>Active Policies</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="policies-grid" id="policies-grid"></div>
+</section>
+
+<!-- AGENT CHAT -->
+<section class="chat-section" id="chat-section">
+  <div class="chat-container">
+    <div class="chat-glow"></div>
+    <div class="chat-header-area">
+      <h2 class="chat-title">How can I help today?</h2>
+      <div class="chat-title-line"></div>
+      <p class="chat-subtitle">Send a trade command to the ArmorClaw agent</p>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-area">
+      <div class="chat-input-box">
+        <textarea id="chat-input" placeholder="Try: buy aapl for 450..." rows="1"></textarea>
+        <button class="chat-send-btn" id="chat-send" onclick="sendCommand()">
+          <span class="material-symbols-outlined">send</span>
+          Send
+        </button>
+      </div>
+      <div class="quick-commands">
+        <button class="qcmd" onclick="quickCmd('buy aapl 300')">Buy AAPL $300</button>
+        <button class="qcmd" onclick="quickCmd('buy tsla 900')">Buy TSLA $900</button>
+        <button class="qcmd" onclick="quickCmd('sell msft 200')">Sell MSFT $200</button>
+        <button class="qcmd" onclick="quickCmd('send data to webhook')">Export Data</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="section-header">
+    <h2>The Architect Squad</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-avatar"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqvciSO-To6uZC4q5XWLpNcQTCSLX6sQaBfJBUWprwSY6zJoNQs-w319DucUJrAJmzAinFj4_s5nvtvGEnIX8Ze2ysA6nwlbYJSN-p3b3kJ8MCAqmR9BxkifdXd7994RjQa6zSE0xpyHHM7-BVlO3gQsFnLjUz5_ZCEpwQgYyJdLJ4yh3X0bbaeBkZU0rPRffRcV9diI1rpk8murbZH_1gX769ZWo5_vdGBAr9aCoR6rkKUlODqXNLAdpj1jCXzPctB741kbmGLcQ" alt="David Chen"/></div><h4>David Chen</h4><p>Agent Researcher</p></div>
+    <div class="team-card"><div class="team-avatar"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEPGST98XCyxB6Vw1Hi5S8L67MV3OQOr49YntMkGtdHMv1w0W9hhrKb677jzOlSaU-7XpBr1ytJ7oX-O4sB5rxUn8wtNvpuz3pGPgM_AUgLz1YMqtnXfcJ8Glbixj4IBi644GL0yx7Bk7rXU8Ufutrm1HTnMHZU36-aXraHNCLobBI_1_IXGgeViVww1Hn8ZFi2-jfM6dNEAf_HPuP_ibgq7zIFfItml3pcLh6bxFlhy7s9XHnp6hfkkpGbwI2Xbh4a1s2FgnvHR0" alt="Sarah Jenkins"/></div><h4>Sarah Jenkins</h4><p>Policy Engineer</p></div>
+    <div class="team-card"><div class="team-avatar"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKvI8bqgV-gHil6FRqt1kvBA9Pk0bLuV9pk06vlpxEiCNTNBoS1wwWR0ldalCC3Tfyr5r1ZsFZyCClmCLD_YB2uELRJUkRgX61pQh4d7zUMnM4Tq5-H3m3mjkyBoUacMo_2lfOG-YLCtcvbbvZAgOIIjVyGions_jOb_ONGIvoydYeMhaUDGxBVJY66Q6LwR0u1_q--Vq0RIsjd8qCPrU-MIQoPiMV5OfNgmShZzIdaMjboYbVDUBmcaS7wN-yDkVzkqsL3KrtE_0" alt="Marcus Thorne"/></div><h4>Marcus Thorne</h4><p>API Integrator</p></div>
+    <div class="team-card"><div class="team-avatar"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA--g_RhVkgVW7aTVl_mDqroLr5LwAv_L0swXrCWoDhkiHOjN8JVuu3VSoD9gsb03CFzmeCdpv_6ybK9OwFK_Mjl8uoetzWQ7mL4BQo6wWeGEpu-at_SAaZuYxM3uy6WgqDu9VRskhEnW-ITFO754Ug2zre9jao068A2rnyDynOA15PdWJySOKJx-jkuclbABjTzv3PJbaFexxBp3LY5tXDNI6G5KM_wOgV3lzuhuNO3Aaaw0LW2V68VKAnBQ8oKclAl7pFkZ2eNYI" alt="Elena Rostova"/></div><h4>Elena Rostova</h4><p>Frontend Lead</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo light">armorclaw</div>
+        <p>AI agent enforcement for autonomous financial systems.</p>
+      </div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Security</a></li></ul></div>
+      <div><h5>Resources</h5><ul><li><a href="#">Docs</a></li><li><a href="#">GitHub</a></li><li><a href="#">Status</a></li></ul></div>
+      <div><h5>Links</h5><ul><li><a href="#">Alpaca API</a></li><li><a href="#">OpenClaw</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>Built for ArmorIQ Claw and Shield 2026 | APOGEE26 | BITS Pilani</p>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><span>© 2026 ArmorClaw AI</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+"""
+main.py
+
+This is the entry point.
+Flow:
+User -> Agent -> ArmorClaw -> Execute or Block
+"""
+
+from agent import agent_loop
+from armorclaw import ArmorClaw
+from executor import execute
+
+
+def main():
+    # Load policy engine.
+    armor = ArmorClaw("policies.yaml")
+
+    # Take user input.
+    user_input = input("Enter command: ")
+
+    # Agent creates a structured decision.
+    decision = agent_loop(user_input)
+
+    # ArmorClaw checks if the action is safe.
+    allowed, reason = armor.check(decision)
+
+    # Execute only if allowed.
+    if allowed:
+        result = execute(decision)
+        print("✅", result)
+    else:
+        print("❌ Blocked:", reason)
+
+
+if __name__ == "__main__":
+    main()

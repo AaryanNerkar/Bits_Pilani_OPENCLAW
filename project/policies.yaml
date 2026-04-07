@@ -1,0 +1,48 @@
+policies:
+  - id: allowlisted_tickers_only
+    rule: "Only trade stocks from the approved ticker list."
+    allowed_tickers: ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA"]
+
+  - id: max_order_value
+    rule: "Do not allow any single trade above $500."
+    max_trade_size_usd: 500
+
+  - id: max_daily_spend
+    rule: "Do not allow total buy value in one day above $1000."
+    max_daily_buy_usd: 1000
+
+  - id: market_hours_only
+    rule: "Allow trades only during market hours."
+    allowed_time_window: "09:30-16:00 America/New_York"
+
+  - id: no_short_selling
+    rule: "Do not allow short selling."
+    allowed_sides: ["buy"]
+
+  - id: no_options_or_margin
+    rule: "Do not allow options, margin, or leveraged products."
+    blocked_products: ["options", "margin", "leveraged_etfs", "futures", "crypto"]
+
+  - id: no_external_api_calls
+    rule: "Do not allow sending portfolio or trade data to external APIs."
+    block_actions: ["external_api_call", "data_export", "webhook_send"]
+
+  - id: cooldown_after_buy
+    rule: "Do not allow selling a stock within 24 hours of buying it."
+    min_hold_time_hours: 24
+
+  - id: max_trades_per_day
+    rule: "Do not allow more than 3 trades per day."
+    max_trades_per_day: 3
+
+  - id: max_open_positions
+    rule: "Do not allow more than 2 open positions at once."
+    max_open_positions: 2
+
+  - id: minimum_cash_buffer
+    rule: "Keep at least $200 cash unused in the account."
+    min_cash_reserve_usd: 200
+
+  - id: mandatory_reason
+    rule: "Every allowed trade must include a valid reason."
+    require_reason: true
